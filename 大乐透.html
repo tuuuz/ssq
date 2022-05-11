@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>大乐透</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://fastly.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://fastly.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    
+    <form onSubmit="return false;">
+  <div class="form-group">
+    <textarea class="form-control" rows="5" id="data">01 11 17 25 28 03 06
+03 04 11 26 28 06 10
+10 11 12 18 34 05 06
+07 16 20 24 27 07 11
+04 11 24 25 30 09 11</textarea>
+  </div>
+  <div class="form-group">
+    <textarea class="form-control" rows="3" id="result" >01 08 11 22 31 05 11</textarea>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-default" id="check">check</button>
+  </div>
+  
+</form>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://fastly.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </body>
+  <script type="text/javascript">
+  	function format(str) {
+  		return _.chunk(_.trim(str).split(' '), 5);
+  	}
+  	function compare(arr1, arr2) {
+  		return [_.intersection(arr1[0], arr2[0]).length, _.intersection(arr1[1], arr2[1]).length]
+  	}
+  	$(function() {
+  		$('#check').click(function(event) {
+  			// event.preventDefault();
+  			var data = $('#data').val();
+  			var result = $('#result').val();
+  			// console.log(data.split('\n'), result)
+  			// console.log(format(result))
+  			var resultarr = format(result);
+  			_.each(data.split("\n"), function(v) {
+  				var times = compare(format(v), resultarr);
+  				console.log(times)
+  				if (times[0] >= 3) {
+  					console.log('中奖')
+  				} else if (times[0] >= 2 && times[1] >= 1) {
+					console.log('中奖')
+  				} else if (times[1] >= 2) {
+  					console.log('中奖')
+  				} else {
+  					console.log('未中奖')
+  				}
+  			})
+  		})
+  	});
+  </script>
+</html>
